@@ -1,7 +1,6 @@
 {
   "name": "@nan-team/testx-utils",
   "version": "0.0.0",
-  "private": false,
   "description": "Testx utils library.",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

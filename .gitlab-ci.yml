@@ -45,12 +45,16 @@ protractor test:
     - master
 
 release:
-  image: bacali95/eonics-nixz-testx-builder
+  image: bacali95/testx-utils-builder:latest
   stage: release
   before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - ssh-keyscan gitlab.com >> ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
     - git config --global user.email "nan.team.s@gmail.com"
     - git config --global user.name "NaN Team"
-    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
     - git checkout -B "$CI_BUILD_REF_NAME" "$CI_BUILD_REF"
   script:
     - npm run build --unsafe-perm
