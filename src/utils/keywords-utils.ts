@@ -170,7 +170,7 @@ export async function loopOverList(args: any, context: TestxContext) {
           if (aimToWork) {
             if (click) {
               linkElem.click();
-              await getTestx().run(script, context);
+              await runTestxScript(context)(scriptFile, script);
             } else {
               let url = await linkElem.getAttribute(linkAttr);
               if (url !== null && url !== '') {
