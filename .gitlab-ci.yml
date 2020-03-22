@@ -9,7 +9,7 @@ stages:
 dependencies:
   stage: dependencies
   script:
-    - npm install --reg https://npm.eonics.nl
+    - npm install
   artifacts:
     paths:
       - node_modules
