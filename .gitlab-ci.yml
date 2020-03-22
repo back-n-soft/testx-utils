@@ -1,0 +1,63 @@
+image: node:10-alpine
+
+stages:
+  - dependencies
+  - build
+  - test
+  - release
+
+dependencies:
+  stage: dependencies
+  script:
+    - npm install --reg https://npm.eonics.nl
+  artifacts:
+    paths:
+      - node_modules
+    expire_in: 1 hours
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - lib
+    expire_in: 1 hours
+  except:
+    - master
+
+jest test:
+  stage: test
+  script:
+    - npm run test:jest
+  except:
+    - master
+
+protractor test:
+  stage: test
+  variables:
+    DBUS_SESSION_BUS_ADDRESS: /dev/null
+  before_script:
+    - apk add --no-cache chromium chromium-chromedriver
+  script:
+    - npm run test:protractor:gitlab
+  except:
+    - master
+
+release:
+  image: bacali95/eonics-nixz-testx-builder
+  stage: release
+  before_script:
+    - git config --global user.email "nan.team.s@gmail.com"
+    - git config --global user.name "NaN Team"
+    - echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+    - git checkout -B "$CI_BUILD_REF_NAME" "$CI_BUILD_REF"
+  script:
+    - npm run build --unsafe-perm
+    - npx semantic-release --debug
+  only:
+    - master
+  artifacts:
+    paths:
+      - lib/
+    expire_in: 1 hours

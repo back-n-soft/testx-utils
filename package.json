@@ -1,0 +1,99 @@
+{
+  "name": "@nan-team/testx-utils",
+  "version": "0.0.0",
+  "description": "Testx utils library.",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
+    "dev": "ts-node src/index.ts",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "test:jest": "jest",
+    "test:protractor": "npm run build && node_modules/.bin/protractor test/protractor/conf.js",
+    "test:protractor:gitlab": "node_modules/.bin/protractor test/protractor/conf.js --chromeDriver=/usr/bin/chromedriver",
+    "commit": "npx git-cz",
+    "docs": "npx typedoc --plugin typedoc-plugin-markdown --mode file --out docs",
+    "lint": "tslint -p tsconfig.json -c tslint.json --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/nan-team/testx-utils.git"
+  },
+  "keywords": [
+    "testx",
+    "scraping"
+  ],
+  "author": {
+    "name": "NaN Team",
+    "email": "nan.team.s@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Nasreddine Bac Ali",
+      "email": "nasreddine.bacali95@gmail.com"
+    },
+    {
+      "name": "Nesrine Sghaier",
+      "email": "nesrinesghaier10@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "axios": "0.19.2",
+    "colors": "^1.4.0",
+    "form-data": "3.0.0",
+    "google-auth-library": "5.10.1",
+    "googleapis": "48.0.0",
+    "js-base64": "2.5.2",
+    "js-yaml": "^3.13.1",
+    "json-stringify-safe": "^5.0.1",
+    "node-rsa": "1.0.7",
+    "protractor": "5.4.3",
+    "rxjs": "6.5.4",
+    "testx": "3.0.9"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "8.3.5",
+    "@commitlint/config-conventional": "8.3.4",
+    "@semantic-release/changelog": "5.0.0",
+    "@semantic-release/git": "9.0.0",
+    "@semantic-release/gitlab": "6.0.2",
+    "@testx/objects-standard": "1.1.0",
+    "@testx/reporters-jasmine": "2.0.0",
+    "@types/axios": "0.14.0",
+    "@types/form-data": "2.5.0",
+    "@types/jest": "25.1.4",
+    "@types/js-base64": "2.3.1",
+    "@types/json-stringify-safe": "5.0.0",
+    "@types/node-rsa": "1.0.0",
+    "@types/protractor": "4.0.0",
+    "commitizen": "4.0.3",
+    "cz-conventional-changelog": "3.1.0",
+    "husky": "4.2.3",
+    "jest": "25.1.0",
+    "prettier": "2.0.1",
+    "semantic-release": "17.0.4",
+    "ts-jest": "25.2.1",
+    "ts-node": "8.8.1",
+    "tslint": "6.1.0",
+    "tslint-config-prettier": "1.18.0",
+    "typedoc": "0.16.11",
+    "typedoc-plugin-markdown": "2.2.17",
+    "typescript": "3.7.5"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm run format && npm run docs && git add .",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

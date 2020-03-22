@@ -1,0 +1,40 @@
+- go to: 'https://nasreddinebacali.info'
+
+- get current url
+
+- log:
+    - currentUrl
+
+- scroll middle
+
+- scroll down
+
+- scroll up
+
+- loop over list:
+    loopPath: '//h2[text()="My Projects"]/../div[1]/div'
+    linkPath: '/div/div/div/h1/a'
+    script: >
+      - log:
+          - projectTitle
+          - projectSummary
+    aimToWork: false
+    preWork:
+      - elemPath: '/div/div/div/h1/a'
+        variable: projectTitle
+      - elemPath: '/div/div/div[2]'
+        variable: projectSummary
+        fail: false
+
+- put:
+    list:
+      - key: one
+      - key: two
+      - key: three
+
+- loop over context list:
+    listName: list
+    itemName: item
+    script: >
+      - log:
+          - item.key

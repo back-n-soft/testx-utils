@@ -1,0 +1,21 @@
+{
+  "extends": [
+    "tslint:latest",
+    "tslint-config-prettier"
+  ],
+  "rules": {
+    "no-console": false,
+    "member-access": false,
+    "quotemark": {
+      "options": "single"
+    },
+    "object-literal-sort-keys": false,
+    "ordered-imports": false,
+    "interface-name": false,
+    "no-var-requires": false,
+    "object-literal-shorthand": false,
+    "no-string-literal": false,
+    "no-submodule-imports": false,
+    "no-eval": false
+  }
+}
