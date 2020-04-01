@@ -1,3 +1,10 @@
+## [1.0.2](https://gitlab.com/nan-team/testx-utils/compare/v1.0.1...v1.0.2) (2020-04-01)
+
+
+### Bug Fixes
+
+* fix 'loop over list' keyword ([948dc66](https://gitlab.com/nan-team/testx-utils/commit/948dc66294d3dda4c43546ac385547685d5883cd))
+
 ## [1.0.1](https://gitlab.com/nan-team/testx-utils/compare/v1.0.0...v1.0.1) (2020-03-22)
 
 
