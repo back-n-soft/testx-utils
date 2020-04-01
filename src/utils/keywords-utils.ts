@@ -1,13 +1,5 @@
 import * as stringify from 'json-stringify-safe';
-import {
-  browser,
-  By,
-  element,
-  ElementArrayFinder,
-  ElementFinder,
-  ExpectedConditions,
-  Locator,
-} from 'protractor';
+import { browser, By, element, ElementArrayFinder, ElementFinder, ExpectedConditions, Locator } from 'protractor';
 import { isNotNullOrUndefined, isNullOrUndefined } from './api-utils';
 
 export type TestxKeywordFunction = (args, context) => any;
@@ -40,40 +32,40 @@ export function waitForLocator(locator: Locator, waitSeconds: number = 10) {
   browser.wait(
     ExpectedConditions.visibilityOf(getTestx().element(locator)),
     waitSeconds * 1000,
-    `Element ${locator} did not appear in ${waitSeconds} seconds.`
+    `Element ${locator} did not appear in ${waitSeconds} seconds.`,
   );
 }
 
 export function waitForElement(
   locator: ElementFinder,
-  waitSeconds: number = 10
+  waitSeconds: number = 10,
 ) {
   browser.wait(
     ExpectedConditions.visibilityOf(locator),
     waitSeconds * 1000,
-    `Element ${locator} did not appear in ${waitSeconds} seconds.`
+    `Element ${locator} did not appear in ${waitSeconds} seconds.`,
   );
 }
 
 export function waitForPresenceOfElement(
   locator: ElementFinder,
-  waitSeconds: number = 10
+  waitSeconds: number = 10,
 ) {
   browser.wait(
     ExpectedConditions.presenceOf(locator),
     waitSeconds * 1000,
-    `Element ${locator} did not appear in ${waitSeconds} seconds.`
+    `Element ${locator} did not appear in ${waitSeconds} seconds.`,
   );
 }
 
 export function waitForDisappearanceOfElement(
   locator: ElementFinder,
-  waitSeconds: number = 10
+  waitSeconds: number = 10,
 ) {
   browser.wait(
     ExpectedConditions.invisibilityOf(locator),
     waitSeconds * 1000,
-    `Element ${locator} did not disappear in ${waitSeconds} seconds.`
+    `Element ${locator} did not disappear in ${waitSeconds} seconds.`,
   );
 }
 
@@ -81,7 +73,7 @@ export function waitForUrl(url: string, waitSeconds: number = 10) {
   browser.wait(
     ExpectedConditions.urlIs(url),
     waitSeconds * 1000,
-    `Url ${url} did not disappear in ${waitSeconds} seconds.`
+    `Url ${url} did not disappear in ${waitSeconds} seconds.`,
   );
 }
 
@@ -110,14 +102,15 @@ export async function loopOverList(args: any, context: TestxContext) {
   ifExists = ifExists || [];
   aimToWork = aimToWork != null ? aimToWork : true;
   console.log(
-    `Starting looping over items:\n\tpathType: ${pathType}\n\tloopPath: ${loopPath}\n\tlinkPath: ${linkPath}\n\tscript: ${script}`
+    `Starting looping over items:\n\tpathType: ${pathType}\n\tloopPath: ${loopPath}\n\tlinkPath: ${linkPath}`,
   );
   const elementArrayFinder: ElementArrayFinder = element.all(
-    By[pathType](`${loopPath}${linkPath}`)
+    By[pathType](`${loopPath}${linkPath}`),
   );
   const elementsNbr = await elementArrayFinder.count();
+  console.log(`There is ${elementsNbr} items to process...`);
   if (elementsNbr === 0) {
-    return console.log('There is no items!!');
+    return;
   }
   const traitElem = (pre: any, i: number) => {
     return new Promise(async (resolve, reject) => {
@@ -147,11 +140,12 @@ export async function loopOverList(args: any, context: TestxContext) {
       const linkElem: ElementFinder = element(
         pathType === 'xpath'
           ? By.xpath(`(${loopPath})[${index}]${ie.elemPath}`)
-          : By.css(`${loopPath}:nth-child(${index})${ie.elemPath}`)
+          : By.css(`${loopPath}:nth-child(${index})${ie.elemPath}`),
       );
       canWork = canWork && (await linkElem.isPresent());
     }
     if (!canWork) {
+      index += stepSize;
       continue;
     }
     const promises: any[] = [];
@@ -163,7 +157,7 @@ export async function loopOverList(args: any, context: TestxContext) {
         const linkElem: ElementFinder = element(
           pathType === 'xpath'
             ? By.xpath(`(${loopPath})[${index}]${linkPath}`)
-            : By.css(`${loopPath}:nth-child(${index})${linkPath}`)
+            : By.css(`${loopPath}:nth-child(${index})${linkPath}`),
         );
         index += stepSize;
         return linkElem.isPresent().then(async () => {
@@ -215,7 +209,7 @@ export function runTestxScript(context: TestxContext) {
     } else if (isNotNullOrUndefined(script)) {
       await getTestx().runScript(
         getTestx().parsers.get('testx').parse(script),
-        context
+        context,
       );
     }
   };
